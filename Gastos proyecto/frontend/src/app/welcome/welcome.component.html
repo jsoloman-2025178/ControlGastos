@@ -1,0 +1,16 @@
+<app-hero-background>
+  <div class="welcome-overlay">
+    <div class="welcome__card">
+      <div class="welcome__badge"></div>
+      <h1 class="welcome__title">¡Bienvenido, {{ username }}!</h1>
+      <p class="welcome__role">
+        Rol:
+        <span class="welcome__role-badge" [ngClass]="role === 'ADMIN' ? 'badge--admin' : 'badge--user'">
+          {{ role === 'ADMIN' ? 'Administrador' : ' Usuario' }}
+        </span>
+      </p>
+      <p class="welcome__message">Has iniciado sesión correctamente.</p>
+      <button class="welcome__logout" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</app-hero-background>
