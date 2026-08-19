@@ -1,28 +1,38 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { GlowHorizonComponent } from '../shared/components/glow-horizon/glow-horizon.component';
+import { ParticleCanvasComponent } from '../shared/components/particle-canvas/particle-canvas.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, GlowHorizonComponent],
+  imports: [CommonModule, FormsModule, ParticleCanvasComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   username = '';
   password = '';
   loading = false;
   errorMessage = '';
+  sessionExpired = false;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private ngZone: NgZone
   ) {}
+
+  ngOnInit(): void {
+    this.sessionExpired = this.authService.sessionExpired;
+    this.authService.sessionExpired = false;
+  }
+
+  dismissSessionMessage(): void {
+    this.sessionExpired = false;
+  }
 
   onSubmit(form: NgForm): void {
     if (form.invalid) {
@@ -40,6 +50,7 @@ export class LoginComponent {
             localStorage.setItem('token', result.token);
             localStorage.setItem('user', JSON.stringify(result.user));
           }
+          this.authService.scheduleExpiryRedirect();
           this.router.navigate(['/welcome']);
         } else {
           this.errorMessage = result.message;

@@ -1,14 +1,25 @@
-<div class="login-page" style="position: relative">
-  <app-glow-horizon variant="top"></app-glow-horizon>
+<div class="login-page">
+  <app-particle-canvas></app-particle-canvas>
 
   <div class="login-content">
     <div class="login-card">
       <div class="login-card__header">
+        <div class="login-card__badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>
+          </svg>
+          <span>Finanzas personales</span>
+        </div>
         <div class="login-card__title-wrap">
-          <span class="login-card__logo">💰</span>
+          <img src="assets/logo.png" alt="Logo" class="login-card__logo">
           <h1 class="login-card__title">Control de Gastos</h1>
         </div>
         <p class="login-card__subtitle">Inicia sesión para ingresar</p>
+      </div>
+
+      <div *ngIf="sessionExpired" class="alert alert--session">
+        <span>La sesión ha finalizado. Por favor, inicia sesión nuevamente.</span>
+        <button type="button" class="alert__close" (click)="dismissSessionMessage()" aria-label="Cerrar">✕</button>
       </div>
 
       <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="login-form">

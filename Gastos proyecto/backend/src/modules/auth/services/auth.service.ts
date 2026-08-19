@@ -5,7 +5,7 @@ import { findUserByUsername, comparePassword, seedUsers } from '../models/user.m
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'mi_secreto_super_seguro_cambiar';
-const JWT_EXPIRES_IN: SignOptions['expiresIn'] = (process.env.JWT_EXPIRES_IN as SignOptions['expiresIn']) || '8h';
+const JWT_EXPIRES_IN: SignOptions['expiresIn'] = (process.env.JWT_EXPIRES_IN as SignOptions['expiresIn']) || '20s';
 
 export interface LoginInput {
   username: string;
